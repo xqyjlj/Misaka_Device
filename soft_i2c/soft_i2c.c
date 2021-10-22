@@ -1,4 +1,4 @@
-#include "misaka_device_soft_i2c.h"
+#include "misaka_device/soft_i2c.h"
 
 #define LOG_NAME "misaka_device_soft_i2c"
 
