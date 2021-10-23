@@ -23,7 +23,7 @@
  * @brief 产生起始信号
  * @param ops i2c设备
  */
-static void misaka_soft_i2c_start(misaka_soft_i2c_t ops)
+static void misaka_soft_i2c_start(const misaka_soft_i2c_t *ops)
 {
 	ops->set_sda_out();
 	ops->set_sda(0);
@@ -35,7 +35,7 @@ static void misaka_soft_i2c_start(misaka_soft_i2c_t ops)
  * @brief 重复产生起始信号，一般是连续读写中
  * @param ops i2c设备
  */
-static void misaka_soft_i2c_restart(misaka_soft_i2c_t ops)
+static void misaka_soft_i2c_restart(const misaka_soft_i2c_t *ops)
 {
 	ops->set_sda_out();
 	ops->set_sda(1);
@@ -50,7 +50,7 @@ static void misaka_soft_i2c_restart(misaka_soft_i2c_t ops)
  * @brief 产生停止信号
  * @param ops i2c设备
  */
-static void misaka_soft_i2c_stop(misaka_soft_i2c_t ops)
+static void misaka_soft_i2c_stop(const misaka_soft_i2c_t *ops)
 {
 	ops->set_sda_out();
 
@@ -68,7 +68,7 @@ static void misaka_soft_i2c_stop(misaka_soft_i2c_t ops)
  * @return 0 @c 接收应答失败
  * @return 1 @c 接收应答成功
  */
-static uint8_t misaka_soft_i2c_wait_ack(misaka_soft_i2c_t ops)
+static uint8_t misaka_soft_i2c_wait_ack(const misaka_soft_i2c_t *ops)
 {
 	uint8_t ack;
 
@@ -90,7 +90,7 @@ static uint8_t misaka_soft_i2c_wait_ack(misaka_soft_i2c_t ops)
  * @return 0 @c 无应答
  * @return 1 @c 有应答
  */
-static uint8_t MISAKA_SOFT_I2C_WRite_byte(misaka_soft_i2c_t ops, uint8_t data)
+static uint8_t MISAKA_SOFT_I2C_WRite_byte(const misaka_soft_i2c_t *ops, uint8_t data)
 {
 	int8_t i;
 	uint8_t bit;
@@ -117,7 +117,7 @@ static uint8_t MISAKA_SOFT_I2C_WRite_byte(misaka_soft_i2c_t ops, uint8_t data)
  * @param ops i2c设备
  * @return uint8_t @c 读取到的1个字节
  */
-static uint8_t misaka_soft_i2c_read_byte(misaka_soft_i2c_t ops)
+static uint8_t misaka_soft_i2c_read_byte(const misaka_soft_i2c_t *ops)
 {
 	uint8_t i;
 	uint8_t data = 0;
@@ -149,7 +149,7 @@ static uint8_t misaka_soft_i2c_read_byte(misaka_soft_i2c_t ops)
  * @param msg 消息对象
  * @return uint32_t @c 发送的字节数
  */
-static uint32_t misaka_soft_i2c_send_bytes(misaka_soft_i2c_t ops, misaka_soft_i2c_message_t msg)
+static uint32_t misaka_soft_i2c_send_bytes(const misaka_soft_i2c_t *ops, misaka_soft_i2c_message_t msg)
 {
 	uint8_t ret;
 	uint32_t bytes = 0;
@@ -185,7 +185,7 @@ static uint32_t misaka_soft_i2c_send_bytes(misaka_soft_i2c_t ops, misaka_soft_i2
  * @param ops i2c设备
  * @param ack 0: 不产生 1: 产生
  */
-static void misaka_soft_i2c_send_ack_or_nack(misaka_soft_i2c_t ops, uint8_t ack)
+static void misaka_soft_i2c_send_ack_or_nack(const misaka_soft_i2c_t *ops, uint8_t ack)
 {
 	ops->set_sda_out();
 
@@ -204,7 +204,7 @@ static void misaka_soft_i2c_send_ack_or_nack(misaka_soft_i2c_t ops, uint8_t ack)
  * @param msg 消息对象
  * @return uint32_t @c 接收多字节数
  */
-static uint32_t misaka_soft_i2c_recv_bytes(misaka_soft_i2c_t ops, misaka_soft_i2c_message_t msg)
+static uint32_t misaka_soft_i2c_recv_bytes(const misaka_soft_i2c_t *ops, misaka_soft_i2c_message_t msg)
 {
 	uint8_t val;
 	uint32_t bytes = 0;
@@ -245,7 +245,7 @@ static uint32_t misaka_soft_i2c_recv_bytes(misaka_soft_i2c_t ops, misaka_soft_i2
  * @return 0 @c 有应答
  * @return 1 @c 无应答
  */
-static uint8_t misaka_soft_i2c_send_address(misaka_soft_i2c_t ops, uint8_t addr, uint8_t retries)
+static uint8_t misaka_soft_i2c_send_address(const misaka_soft_i2c_t *ops, uint8_t addr, uint8_t retries)
 {
 	uint8_t i;
 	uint8_t ret = 0;
@@ -272,7 +272,7 @@ static uint8_t misaka_soft_i2c_send_address(misaka_soft_i2c_t ops, uint8_t addr,
  * @return 0 @c 有应答
  * @return 1 @c 无应答
  */
-static uint8_t misaka_soft_i2c_bit_send_address(misaka_soft_i2c_t ops, misaka_soft_i2c_message_t msg)
+static uint8_t misaka_soft_i2c_bit_send_address(const misaka_soft_i2c_t *ops, misaka_soft_i2c_message_t msg)
 {
 	uint16_t flags = msg->flags;
 	uint16_t ignore_nack = msg->flags & MISAKA_SOFT_I2C_IGNORE_NACK;
@@ -334,7 +334,7 @@ static uint8_t misaka_soft_i2c_bit_send_address(misaka_soft_i2c_t ops, misaka_so
  * @param num 消息数量
  * @return uint16_t @c 操作的消息数
  */
-static uint16_t misaka_soft_i2c_bit_xfer(misaka_soft_i2c_t ops, misaka_soft_i2c_message *msgs, uint16_t num)
+static uint16_t misaka_soft_i2c_bit_xfer(const misaka_soft_i2c_t *ops, misaka_soft_i2c_message *msgs, uint16_t num)
 {
 	misaka_soft_i2c_message_t msg;
 	uint32_t i, ret;
@@ -399,7 +399,7 @@ static uint16_t misaka_soft_i2c_bit_xfer(misaka_soft_i2c_t ops, misaka_soft_i2c_
  * @param num 消息数量
  * @return uint16_t @c 操作的消息数
  */
-uint16_t misaka_soft_i2c_transfer(misaka_soft_i2c_t ops, misaka_soft_i2c_message *msgs, uint16_t num)
+uint16_t misaka_soft_i2c_transfer(const misaka_soft_i2c_t *ops, misaka_soft_i2c_message *msgs, uint16_t num)
 {
 	uint16_t ret;
 
@@ -423,7 +423,7 @@ uint16_t misaka_soft_i2c_transfer(misaka_soft_i2c_t ops, misaka_soft_i2c_message
  * @param len 发送数据长度
  * @return uint16_t @c 操作的消息数
  */
-uint16_t misaka_soft_i2c_master_send(misaka_soft_i2c_t ops, uint16_t addr, uint16_t flags, uint8_t *buf, uint32_t len)
+uint16_t misaka_soft_i2c_master_send(const misaka_soft_i2c_t *ops, uint16_t addr, uint16_t flags, uint8_t *buf, uint32_t len)
 {
 	uint16_t ret;
 	misaka_soft_i2c_message msg;
@@ -447,7 +447,7 @@ uint16_t misaka_soft_i2c_master_send(misaka_soft_i2c_t ops, uint16_t addr, uint1
  * @param rxlen 接收数据长度
  * @return uint16_t @c 操作的消息数
  */
-uint16_t misaka_soft_i2c_master_recv(misaka_soft_i2c_t ops, uint16_t addr, uint16_t flags, uint8_t *rxbuf, uint32_t rxlen)
+uint16_t misaka_soft_i2c_master_recv(const misaka_soft_i2c_t *ops, uint16_t addr, uint16_t flags, uint8_t *rxbuf, uint32_t rxlen)
 {
 	uint16_t ret;
 	misaka_soft_i2c_message msg;
@@ -472,7 +472,7 @@ uint16_t misaka_soft_i2c_master_recv(misaka_soft_i2c_t ops, uint16_t addr, uint1
  * @param rxlen 接收数据长度
  * @return uint16_t @c 操作的消息数
  */
-uint16_t misaka_soft_i2c_master_send_then_recv(misaka_soft_i2c_t ops, uint16_t addr, uint8_t *txbuf, uint32_t txlen, uint8_t *rxbuf, uint32_t rxlen)
+uint16_t misaka_soft_i2c_master_send_then_recv(const misaka_soft_i2c_t *ops, uint16_t addr, uint8_t *txbuf, uint32_t txlen, uint8_t *rxbuf, uint32_t rxlen)
 {
 	uint16_t ret;
 	misaka_soft_i2c_message msg[2];
@@ -502,7 +502,7 @@ uint16_t misaka_soft_i2c_master_send_then_recv(misaka_soft_i2c_t ops, uint16_t a
  * @param txlen2 发送数据长度2
  * @return uint16_t @c 操作的消息数
  */
-uint16_t misaka_soft_i2c_master_send_then_send(misaka_soft_i2c_t ops, uint16_t addr, uint8_t *txbuf1, uint32_t txlen1, uint8_t *txbuf2, uint32_t txlen2)
+uint16_t misaka_soft_i2c_master_send_then_send(const misaka_soft_i2c_t *ops, uint16_t addr, uint8_t *txbuf1, uint32_t txlen1, uint8_t *txbuf2, uint32_t txlen2)
 {
 	uint16_t ret;
 	misaka_soft_i2c_message msg[2];
@@ -526,7 +526,7 @@ uint16_t misaka_soft_i2c_master_send_then_send(misaka_soft_i2c_t ops, uint16_t a
  * @brief 初始化函数
  * @param ops i2c设备
  */
-void misaka_soft_i2c_init(misaka_soft_i2c_t ops)
+void misaka_soft_i2c_init(const misaka_soft_i2c_t *ops)
 {
 	misaka_soft_i2c_assert(ops);
 	misaka_soft_i2c_assert(ops->delay_us);
