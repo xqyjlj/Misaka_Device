@@ -1,11 +1,27 @@
+/**
+ * @file soft_i2c_port.c
+ * @brief
+ * @author xqyjlj (xqyjlj@126.com)
+ * @version 0.0
+ * @date 2021-05-12
+ * @copyright Copyright © 2021-2021 xqyjlj<xqyjlj@126.com>
+ * @SPDX-License-Identifier: Apache-2.0
+ *
+ * ********************************************************************************
+ * @par ChangeLog:
+ * <table>
+ * <tr><th>Date       <th>Version <th>Author  <th>Description
+ * <tr><td>2021-05-12 <td>0.0     <td>xqyjlj  <td>内容
+ * </table>
+ * ********************************************************************************
+ */
 #include "misaka_device/soft_i2c.h"
 
-static misaka_device_soft_i2c i2c_obj;
+static misaka_soft_i2c i2c_obj;
 
 /**
  * @brief 设置sda引脚电平
- * @param  level            0: 低电平
- *                          1: 高电平
+ * @param  level 0: 低电平 1: 高电平
  */
 static void set_sda(uint8_t level)
 {
@@ -14,8 +30,7 @@ static void set_sda(uint8_t level)
 
 /**
  * @brief 设置scl引脚电平
- * @param  level            0: 低电平
- *                          1: 高电平
+ * @param  level 0: 低电平 1: 高电平
  */
 static void set_scl(uint8_t level)
 {
@@ -77,28 +92,28 @@ static void set_sda_in()
  * @brief I2C读写错误回调函数
  * @param  ops              i2c设备
  */
-void misaka_device_soft_i2c_error_callback(misaka_device_soft_i2c_t ops)
+void misaka_soft_i2c_error_callback(misaka_soft_i2c_t ops)
 {
 
 }
 
-misaka_device_soft_i2c_t misaka_device_soft_i2c_port_init()
+misaka_soft_i2c_t misaka_soft_i2c_port_init()
 {
-    i2c_obj.delay_us = delay_us;
-    i2c_obj.get_sda = get_sda;
-    i2c_obj.mutex_release = mutex_release;
-    i2c_obj.mutex_take = mutex_take;
-    i2c_obj.set_scl = set_scl;
-    i2c_obj.set_sda = set_sda;
-    i2c_obj.set_sda_out = set_sda_out;
-    i2c_obj.set_sda_in = set_sda_in;
-    i2c_obj.us = 1;
+	i2c_obj.delay_us = delay_us;
+	i2c_obj.get_sda = get_sda;
+	i2c_obj.mutex_release = mutex_release;
+	i2c_obj.mutex_take = mutex_take;
+	i2c_obj.set_scl = set_scl;
+	i2c_obj.set_sda = set_sda;
+	i2c_obj.set_sda_out = set_sda_out;
+	i2c_obj.set_sda_in = set_sda_in;
+	i2c_obj.us = 1;
 
-    set_sda(1);
-    set_scl(1);
+	set_sda(1);
+	set_scl(1);
 
-    misaka_device_soft_i2c_init(&i2c_obj);
+	misaka_soft_i2c_init(&i2c_obj);
 
-    return &i2c_obj;
+	return &i2c_obj;
 }
 
