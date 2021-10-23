@@ -74,9 +74,9 @@ void misaka_soft_i2c_error_callback(const misaka_soft_i2c_t *ops);
  * @param ops i2c设备
  * @param msgs 消息对象
  * @param num 消息数量
- * @return uint16_t @c 操作的消息数
+ * @return uint32_t @c 操作的消息数
  */
-uint16_t misaka_soft_i2c_transfer(const misaka_soft_i2c_t *ops, misaka_soft_i2c_message *msgs, uint16_t num);
+uint32_t misaka_soft_i2c_transfer(const misaka_soft_i2c_t *ops, misaka_soft_i2c_message *msgs, uint32_t num);
 
 /**
  * @brief 发送数据
@@ -85,9 +85,9 @@ uint16_t misaka_soft_i2c_transfer(const misaka_soft_i2c_t *ops, misaka_soft_i2c_
  * @param  flags            标志
  * @param  buf              待发送数据
  * @param  len              发送数据长度
- * @return uint16_t @c 操作的消息数
+ * @return uint32_t @c 操作的消息数
  */
-uint16_t misaka_soft_i2c_master_send(const misaka_soft_i2c_t *ops, uint16_t addr, uint16_t flags, uint8_t *buf, uint32_t len);
+uint32_t misaka_soft_i2c_master_send(const misaka_soft_i2c_t *ops, uint16_t addr, uint16_t flags, uint8_t *buf, uint32_t len);
 
 /**
  * @brief 发送数据
@@ -96,9 +96,9 @@ uint16_t misaka_soft_i2c_master_send(const misaka_soft_i2c_t *ops, uint16_t addr
  * @param flags 标志
  * @param buf 待发送数据
  * @param len 发送数据长度
- * @return uint16_t @c 操作的消息数
+ * @return uint32_t @c 操作的消息数
  */
-uint16_t misaka_soft_i2c_master_recv(const misaka_soft_i2c_t *ops, uint16_t addr, uint16_t flags, uint8_t *rxbuf, uint32_t rxlen);
+uint32_t misaka_soft_i2c_master_recv(const misaka_soft_i2c_t *ops, uint16_t addr, uint16_t flags, uint8_t *rxbuf, uint32_t rxlen);
 
 /**
  * @brief 发送数据后接收数据
@@ -108,21 +108,21 @@ uint16_t misaka_soft_i2c_master_recv(const misaka_soft_i2c_t *ops, uint16_t addr
  * @param txlen 发送数据长度
  * @param rxbuf 待接收数据
  * @param rxlen 接收数据长度
- * @return uint16_t @c 操作的消息数
+ * @return uint32_t @c 操作的消息数
  */
-uint16_t misaka_soft_i2c_master_send_then_recv(const misaka_soft_i2c_t *ops, uint16_t addr, uint8_t *txbuf, uint32_t txlen, uint8_t *rxbuf, uint32_t rxlen);
+uint32_t misaka_soft_i2c_master_send_then_recv(const misaka_soft_i2c_t *ops, uint16_t addr, uint8_t *txbuf, uint32_t txlen, uint8_t *rxbuf, uint32_t rxlen);
 
 /**
- * @brief 发送数据后接收数据
+ * @brief 发送数据后发送数据
  * @param ops i2c设备
  * @param addr 地址
- * @param txbuf 待发送数据
- * @param txlen 发送数据长度
- * @param rxbuf 待接收数据
- * @param rxlen 接收数据长度
- * @return uint16_t @c 操作的消息数
+ * @param txbuf1 待发送数据1
+ * @param txlen1 发送数据长度1
+ * @param txbuf2 待发送数据2
+ * @param txlen2 发送数据长度2
+ * @return uint32_t @c 操作的消息数
  */
-uint16_t misaka_soft_i2c_master_send_then_send(const misaka_soft_i2c_t *ops, uint16_t addr, uint8_t *txbuf1, uint32_t txlen1, uint8_t *txbuf2, uint32_t txlen2);
+uint32_t misaka_soft_i2c_master_send_then_send(const misaka_soft_i2c_t *ops, uint16_t addr, uint8_t *txbuf1, uint32_t txlen1, uint8_t *txbuf2, uint32_t txlen2);
 
 /**
  * @brief 初始化函数
